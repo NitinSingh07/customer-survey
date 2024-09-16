@@ -98,7 +98,7 @@ const SurveyQuestions = ({ endSurvey }) => {
         <div className="ml-24">
           <button
             onClick={handlePrevious}
-            className=" mr-12 px-6 py-3 bg-teal-600 text-white rounded-lg shadow-md hover:bg-teal-700 transition mt-4"
+            className=" mr-12 px-6 py-3 bg-blue-600 text-white rounded-lg shadow-md hover:bg-blue-700 transition mt-4"
           >
             Previous
           </button>

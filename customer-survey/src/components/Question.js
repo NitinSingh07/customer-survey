@@ -50,7 +50,7 @@ const Question = ({ question, questionNumber, totalQuestions, onAnswer }) => {
       )}
 
       {/* Next Button */}
-      <div className="flex justify-end mb-[-76px]">
+      <div className="flex justify-end mb-[-78px]">
         <button
           onClick={handleNext} // Call handleNext to submit the answer
           className="px-9 py-3 bg-teal-600 text-white rounded-lg shadow-md hover:bg-teal-700 transition mt-4"
