@@ -1,0 +1,55 @@
+import React, { useState } from "react";
+
+const Question = ({ question, questionNumber, totalQuestions, onAnswer }) => {
+  const [answer, setAnswer] = useState("");
+
+  const handleNext = () => {
+    onAnswer(answer);
+    setAnswer("");
+  };
+
+  return (
+    <div className="w-full max-w-lg mx-auto p-4 bg-white">
+      {/* Question Heading */}
+      <div className="mb-6">
+        <p className="text-2xl font-bold text-gray-800">
+          Question {questionNumber} of {totalQuestions}
+        </p>
+      </div>
+
+      {/* Question Text */}
+      <p className="text-lg text-gray-700 mb-8">{question.text}</p>
+
+      {/* Rating Buttons */}
+      {question.type === "rating" && (
+        <div className="flex justify-center gap-4 mb-6">
+          {[...Array(question.scale)].map((_, index) => (
+            <button
+              key={index}
+              className={`w-16 h-16 flex items-center justify-center rounded-full text-xl font-bold transition-transform transform ${
+                answer === index + 1
+                  ? "bg-teal-600 text-white scale-110 shadow-lg"
+                  : "bg-gray-200 text-gray-700 hover:bg-teal-400"
+              }`}
+              onClick={() => setAnswer(index + 1)}
+            >
+              {index + 1}
+            </button>
+          ))}
+        </div>
+      )}
+
+      {/* Text Area */}
+      {question.type === "text" && (
+        <textarea
+          value={answer}
+          onChange={(e) => setAnswer(e.target.value)}
+          className="w-full h-40 p-4 border border-gray-300 rounded-lg shadow-md resize-none placeholder-gray-500 focus:outline-none focus:ring-2 focus:ring-teal-500 transition duration-300"
+          placeholder="Type your feedback here..."
+        />
+      )}
+    </div>
+  );
+};
+
+export default Question;
