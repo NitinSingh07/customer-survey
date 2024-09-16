@@ -34,38 +34,39 @@ const questions = [
     type: "text",
   },
 ];
-
 const SurveyQuestions = ({ endSurvey }) => {
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [answers, setAnswers] = useState({});
-  const [sessionId] = useState(() => Date.now().toString()); // Generate session ID
+  const [sessionId] = useState(() => Date.now().toString());
   const [isCompleted, setIsCompleted] = useState(false);
 
   const handleAnswer = (answer) => {
     const updatedAnswers = {
       ...answers,
-      [questions[currentQuestionIndex].id]: answer,
+      [questions[currentQuestionIndex].id]: answer, // Store the answer with the correct question ID
     };
     setAnswers(updatedAnswers);
 
     if (currentQuestionIndex < questions.length - 1) {
       setCurrentQuestionIndex(currentQuestionIndex + 1);
     } else {
-      submitSurvey(updatedAnswers); // Call to backend when all questions are answered
+      submitSurvey(updatedAnswers);
     }
   };
 
   const submitSurvey = async (finalAnswers) => {
+    console.log("Submitting survey with answers:", finalAnswers);
     try {
-      await axios.post("http://localhost:5000/submit-survey", {
+      const response = await axios.post("http://localhost:5000/submit-survey", {
         sessionId,
         answers: Object.entries(finalAnswers).map(([questionId, answer]) => ({
-          questionId,
+          questionId: parseInt(questionId, 10),
           answer,
         })),
         status: "COMPLETED",
       });
-      setIsCompleted(true); // Survey complete
+      console.log("Survey submitted successfully:", response.data);
+      setIsCompleted(true);
     } catch (err) {
       console.error("Error submitting survey", err);
     }
@@ -78,33 +79,13 @@ const SurveyQuestions = ({ endSurvey }) => {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-teal-200 to-blue-300 p-4">
       <div className="w-full max-w-3xl p-8 bg-white rounded-xl shadow-xl border border-gray-300">
-        <div className="flex items-center justify-between mb-6">
-          {/* <p className="text-3xl font-bold text-gray-800">
-            Question {currentQuestionIndex + 1} of {questions.length}
-          </p> */}
-        </div>
-        <div className="  ">
+        <div className="">
           <Question
             question={questions[currentQuestionIndex]}
             questionNumber={currentQuestionIndex + 1}
             totalQuestions={questions.length}
-            onAnswer={handleAnswer}
+            onAnswer={handleAnswer} // Pass handleAnswer as a prop to handle the answer
           />
-        </div>
-        <div className="flex justify-between items-center mt-8">
-          <button
-            onClick={() => setCurrentQuestionIndex(currentQuestionIndex - 1)}
-            disabled={currentQuestionIndex === 0}
-            className="px-6 py-3 bg-gray-400 text-white rounded-lg shadow-md hover:bg-gray-500 transition duration-300"
-          >
-            Previous
-          </button>
-          <button
-            onClick={() => handleAnswer(null)} // Placeholder action for demonstration
-            className="px-6 py-3 bg-teal-600 text-white rounded-lg shadow-md hover:bg-teal-700 transition duration-300"
-          >
-            {currentQuestionIndex < questions.length - 1 ? "Next" : "Submit"}
-          </button>
         </div>
       </div>
     </div>

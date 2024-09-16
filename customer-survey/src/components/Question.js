@@ -4,8 +4,8 @@ const Question = ({ question, questionNumber, totalQuestions, onAnswer }) => {
   const [answer, setAnswer] = useState("");
 
   const handleNext = () => {
-    onAnswer(answer);
-    setAnswer("");
+    onAnswer(answer); // Pass the answer to the parent component
+    setAnswer(""); // Clear the answer after submission
   };
 
   return (
@@ -31,7 +31,7 @@ const Question = ({ question, questionNumber, totalQuestions, onAnswer }) => {
                   ? "bg-teal-600 text-white scale-110 shadow-lg"
                   : "bg-gray-200 text-gray-700 hover:bg-teal-400"
               }`}
-              onClick={() => setAnswer(index + 1)}
+              onClick={() => setAnswer(index + 1)} // Set the selected rating
             >
               {index + 1}
             </button>
@@ -48,6 +48,14 @@ const Question = ({ question, questionNumber, totalQuestions, onAnswer }) => {
           placeholder="Type your feedback here..."
         />
       )}
+
+      {/* Next Button */}
+      <button
+        onClick={handleNext} // Call handleNext to submit the answer
+        className="px-6 py-3 bg-teal-600 text-white rounded-lg shadow-md hover:bg-teal-700 transition mt-4"
+      >
+        Next
+      </button>
     </div>
   );
 };
