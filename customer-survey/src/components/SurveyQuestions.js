@@ -76,6 +76,13 @@ const SurveyQuestions = ({ endSurvey }) => {
     return <ThankYouScreen />;
   }
 
+  // Handle the "Previous" button click and move to the previous question
+  const handlePrevious = () => {
+    if (currentQuestionIndex > 0) {
+      setCurrentQuestionIndex(currentQuestionIndex - 1);
+    }
+  };
+
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-r from-teal-200 to-blue-300 p-4">
       <div className="w-full max-w-3xl p-8 bg-white rounded-xl shadow-xl border border-gray-300">
@@ -84,8 +91,17 @@ const SurveyQuestions = ({ endSurvey }) => {
             question={questions[currentQuestionIndex]}
             questionNumber={currentQuestionIndex + 1}
             totalQuestions={questions.length}
-            onAnswer={handleAnswer} // Pass handleAnswer as a prop to handle the answer
+            onPrevious={handlePrevious}
+            onAnswer={handleAnswer}
           />
+        </div>
+        <div className="ml-24">
+          <button
+            onClick={handlePrevious}
+            className=" mr-12 px-6 py-3 bg-teal-600 text-white rounded-lg shadow-md hover:bg-teal-700 transition mt-4"
+          >
+            Previous
+          </button>
         </div>
       </div>
     </div>

@@ -50,12 +50,14 @@ const Question = ({ question, questionNumber, totalQuestions, onAnswer }) => {
       )}
 
       {/* Next Button */}
-      <button
-        onClick={handleNext} // Call handleNext to submit the answer
-        className="px-6 py-3 bg-teal-600 text-white rounded-lg shadow-md hover:bg-teal-700 transition mt-4"
-      >
-        Next
-      </button>
+      <div className="flex justify-end mb-[-76px]">
+        <button
+          onClick={handleNext} // Call handleNext to submit the answer
+          className="px-9 py-3 bg-teal-600 text-white rounded-lg shadow-md hover:bg-teal-700 transition mt-4"
+        >
+          {questionNumber < totalQuestions ? "Next" : "Submit"}
+        </button>
+      </div>
     </div>
   );
 };
